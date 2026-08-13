@@ -37,7 +37,7 @@ const MainLayout: React.FC = () => {
   }, [theme]);
 
   return (
-    <div className={`${theme === 'dark' ? 'dark' : ''} min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans`}>
+    <div className={`${theme === 'dark' ? 'dark' : ''} min-h-screen w-full bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans overflow-x-hidden`}>
       {/* Toast Notifications */}
       <ToastContainer />
 
@@ -51,7 +51,7 @@ const MainLayout: React.FC = () => {
       <Sidebar mobileOpen={mobileSidebarOpen} setMobileOpen={setMobileSidebarOpen} />
 
       {/* Main Content Area */}
-      <div className="lg:pl-64 flex flex-col min-h-screen">
+      <div className="lg:pl-64 flex flex-col min-h-screen w-full">
         {/* Top Header Bar */}
         <Topbar
           theme={theme}
@@ -60,7 +60,7 @@ const MainLayout: React.FC = () => {
         />
 
         {/* Dynamic View Switcher */}
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden">
           {currentView === 'dashboard' && <DashboardView />}
           {currentView === 'pos' && <POSView />}
           {currentView === 'products' && <ProductsView />}

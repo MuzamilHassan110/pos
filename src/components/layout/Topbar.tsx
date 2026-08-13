@@ -64,9 +64,9 @@ export const Topbar: React.FC<TopbarProps> = ({ theme, onToggleTheme, onOpenMobi
   };
 
   return (
-    <header className="sticky top-0 z-30 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-30 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
       {/* Left section: Mobile menu toggle + Page Title */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 min-w-0 flex-1 sm:flex-none">
         <button
           onClick={onOpenMobileSidebar}
           className="lg:hidden p-2 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 bg-slate-100 dark:bg-slate-800 rounded-xl"
@@ -109,7 +109,7 @@ export const Topbar: React.FC<TopbarProps> = ({ theme, onToggleTheme, onOpenMobi
       </div>
 
       {/* Right section: Quick Actions, Notifications, Cashier */}
-      <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
         {/* Quick New Sale button if not in POS view */}
         {currentView !== 'pos' && (
           <button

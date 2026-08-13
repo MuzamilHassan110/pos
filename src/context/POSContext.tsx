@@ -171,34 +171,26 @@ export const POSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return;
     }
 
-    setCart((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id);
-      if (existing) {
-        const newQty = existing.quantity + quantityToAdd;
-        if (newQty > product.stockQuantity) {
-          setTimeout(() => {
-            showToast('warning', 'Stock Limit Reached', `Only ${product.stockQuantity} ${product.unit} available.`);
-          }, 0);
-          return prev;
-        }
+    const existing = cart.find((item) => item.product.id === product.id);
 
-        const updatedCart = prev.map((item) =>
-          item.product.id === product.id ? { ...item, quantity: newQty } : item
-        );
-
-        setTimeout(() => {
-          showToast('info', 'Cart Updated', `Increased quantity of ${product.name}`);
-        }, 0);
-
-        return updatedCart;
+    if (existing) {
+      const newQty = existing.quantity + quantityToAdd;
+      if (newQty > product.stockQuantity) {
+        showToast('warning', 'Stock Limit Reached', `Only ${product.stockQuantity} ${product.unit} available.`);
+        return;
       }
 
-      const updatedCart = [...prev, { product, quantity: quantityToAdd, discount: 0 }];
-      setTimeout(() => {
-        showToast('success', 'Added to Cart', `${product.name} added.`);
-      }, 0);
-      return updatedCart;
-    });
+      setCart((prev) =>
+        prev.map((item) =>
+          item.product.id === product.id ? { ...item, quantity: newQty } : item
+        )
+      );
+      showToast('info', 'Cart Updated', `Increased quantity of ${product.name}`);
+      return;
+    }
+
+    setCart((prev) => [...prev, { product, quantity: quantityToAdd, discount: 0 }]);
+    showToast('success', 'Added to Cart', `${product.name} added.`);
   };
 
   const updateCartQuantity = (productId: string, quantity: number) => {

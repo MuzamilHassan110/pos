@@ -39,7 +39,7 @@ export const POSView: React.FC = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-4.5rem)] flex flex-col lg:flex-row gap-4 p-4 overflow-hidden">
+    <div className="min-h-[calc(100vh-4.5rem)] flex flex-col gap-4 p-3 sm:p-4 lg:h-[calc(100vh-4.5rem)] lg:flex-row lg:overflow-hidden">
       {/* Left Column: Product Search & Product Grid */}
       <div className="flex-1 flex flex-col gap-3 min-w-0 h-full overflow-hidden">
         <ProductSearch
@@ -58,7 +58,7 @@ export const POSView: React.FC = () => {
       </div>
 
       {/* Right Column: Register Shopping Cart Panel */}
-      <div className="w-full lg:w-96 shrink-0 h-full">
+      <div className="w-full lg:w-[22rem] xl:w-[24rem] shrink-0 h-full">
         <CartPanel
           onOpenCheckout={() => setIsCheckoutOpen(true)}
           onOpenAddCustomerModal={() => setIsAddCustomerOpen(true)}
