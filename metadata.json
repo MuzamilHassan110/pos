@@ -1,0 +1,6 @@
+{
+  "name": "Retail Point of Sale",
+  "description": "A modern, fast, and responsive Point of Sale (POS) system with inventory management, sales processing, customer records, expenses, and analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
