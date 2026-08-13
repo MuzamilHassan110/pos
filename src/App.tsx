@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { POSProvider, usePOS } from './context/POSContext';
 import { Sidebar } from './components/layout/Sidebar';
 import { Topbar } from './components/layout/Topbar';
@@ -17,11 +17,27 @@ import { ReportsView } from './components/reports/ReportsView';
 import { SettingsView } from './components/settings/SettingsView';
 
 const MainLayout: React.FC = () => {
-  const { currentView, activeReceiptModalSale, setActiveReceiptModalSale } = usePOS();
+  const { currentView } = usePOS();
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') return 'light';
+
+    const savedTheme = window.localStorage.getItem('pos-theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      return savedTheme;
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.style.colorScheme = theme;
+    window.localStorage.setItem('pos-theme', theme);
+  }, [theme]);
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans">
+    <div className={`${theme === 'dark' ? 'dark' : ''} min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans`}>
       {/* Toast Notifications */}
       <ToastContainer />
 
@@ -37,7 +53,11 @@ const MainLayout: React.FC = () => {
       {/* Main Content Area */}
       <div className="lg:pl-64 flex flex-col min-h-screen">
         {/* Top Header Bar */}
-        <Topbar onOpenMobileSidebar={() => setMobileSidebarOpen(true)} />
+        <Topbar
+          theme={theme}
+          onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
+          onOpenMobileSidebar={() => setMobileSidebarOpen(true)}
+        />
 
         {/* Dynamic View Switcher */}
         <main className="flex-1 overflow-y-auto">

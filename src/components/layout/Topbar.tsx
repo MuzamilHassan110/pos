@@ -10,13 +10,17 @@ import {
   AlertTriangle,
   Clock,
   X,
+  Sun,
+  Moon,
 } from 'lucide-react';
 
 interface TopbarProps {
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
   onOpenMobileSidebar: () => void;
 }
 
-export const Topbar: React.FC<TopbarProps> = ({ onOpenMobileSidebar }) => {
+export const Topbar: React.FC<TopbarProps> = ({ theme, onToggleTheme, onOpenMobileSidebar }) => {
   const {
     currentView,
     setCurrentView,
@@ -129,6 +133,16 @@ export const Topbar: React.FC<TopbarProps> = ({ onOpenMobileSidebar }) => {
           <Keyboard className="w-5 h-5" />
         </button>
 
+        {/* Theme Toggle */}
+        <button
+          onClick={onToggleTheme}
+          className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors"
+          title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+        </button>
+
         {/* Low Stock Notification Dropdown */}
         <div className="relative">
           <button
@@ -195,16 +209,23 @@ export const Topbar: React.FC<TopbarProps> = ({ onOpenMobileSidebar }) => {
             {cashierName.substring(0, 2).toUpperCase()}
           </div>
           <div className="hidden md:block text-xs">
-            <span className="block text-[10px] text-slate-400 uppercase font-semibold leading-none">Cashier</span>
-            <select
-              value={cashierName}
-              onChange={(e) => setCashierName(e.target.value)}
-              className="bg-transparent font-semibold text-slate-800 dark:text-slate-200 cursor-pointer focus:outline-none"
-            >
-              <option value="Alex Rivers">Alex Rivers</option>
-              <option value="Jordan Lee">Jordan Lee</option>
-              <option value="Taylor Smith">Taylor Smith</option>
-            </select>
+            <span className="block text-[10px] text-slate-400 uppercase font-semibold leading-none mb-1">Cashier</span>
+            <div className="relative">
+              <select
+                value={cashierName}
+                onChange={(e) => setCashierName(e.target.value)}
+                className="appearance-none bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 pr-8 font-semibold text-slate-800 dark:text-slate-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/40 shadow-sm"
+              >
+                <option value="Alex Rivers">Alex Rivers</option>
+                <option value="Jordan Lee">Jordan Lee</option>
+                <option value="Taylor Smith">Taylor Smith</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-2.5 flex items-center text-slate-500 dark:text-slate-400">
+                <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       </div>

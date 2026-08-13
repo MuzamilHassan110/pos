@@ -176,15 +176,28 @@ export const POSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       if (existing) {
         const newQty = existing.quantity + quantityToAdd;
         if (newQty > product.stockQuantity) {
-          showToast('warning', 'Stock Limit Reached', `Only ${product.stockQuantity} ${product.unit} available.`);
+          setTimeout(() => {
+            showToast('warning', 'Stock Limit Reached', `Only ${product.stockQuantity} ${product.unit} available.`);
+          }, 0);
           return prev;
         }
-        showToast('info', 'Cart Updated', `Increased quantity of ${product.name}`);
-        return prev.map((item) => (item.product.id === product.id ? { ...item, quantity: newQty } : item));
-      } else {
-        showToast('success', 'Added to Cart', `${product.name} added.`);
-        return [...prev, { product, quantity: quantityToAdd, discount: 0 }];
+
+        const updatedCart = prev.map((item) =>
+          item.product.id === product.id ? { ...item, quantity: newQty } : item
+        );
+
+        setTimeout(() => {
+          showToast('info', 'Cart Updated', `Increased quantity of ${product.name}`);
+        }, 0);
+
+        return updatedCart;
       }
+
+      const updatedCart = [...prev, { product, quantity: quantityToAdd, discount: 0 }];
+      setTimeout(() => {
+        showToast('success', 'Added to Cart', `${product.name} added.`);
+      }, 0);
+      return updatedCart;
     });
   };
 

@@ -58,7 +58,11 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ selectedCategoryId, st
         return (
           <div
             key={product.id}
-            onClick={() => !isOutOfStock && addToCart(product)}
+            onClick={(e) => {
+              const target = e.target as HTMLElement;
+              if (target.closest('button')) return;
+              if (!isOutOfStock) addToCart(product);
+            }}
             className={`group relative bg-white dark:bg-slate-900 border rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-200 ${
               isOutOfStock
                 ? 'opacity-60 border-slate-200 dark:border-slate-800 cursor-not-allowed'

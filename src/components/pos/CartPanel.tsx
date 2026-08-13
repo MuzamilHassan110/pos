@@ -69,24 +69,31 @@ export const CartPanel: React.FC<CartPanelProps> = ({
         </div>
 
         {/* Customer Attachment Bar */}
-        <div className="flex items-center justify-between gap-2 bg-white dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
+        <div className="flex items-center justify-between gap-2 bg-slate-50 dark:bg-slate-800 p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs shadow-sm">
           <div className="flex items-center gap-2 min-w-0 flex-1">
             <UserCheck className="w-4 h-4 text-slate-400 shrink-0" />
-            <select
-              value={selectedCustomer ? selectedCustomer.id : ''}
-              onChange={(e) => {
-                const found = customers.find((c) => c.id === e.target.value);
-                setSelectedCustomer(found || null);
-              }}
-              className="w-full bg-transparent font-medium text-slate-800 dark:text-slate-200 focus:outline-none truncate cursor-pointer"
-            >
-              <option value="">-- Walk-in / Guest Customer --</option>
-              {customers.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name} ({c.phone})
-                </option>
-              ))}
-            </select>
+            <div className="relative flex-1">
+              <select
+                value={selectedCustomer ? selectedCustomer.id : ''}
+                onChange={(e) => {
+                  const found = customers.find((c) => c.id === e.target.value);
+                  setSelectedCustomer(found || null);
+                }}
+                className="appearance-none w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 py-1.5 pr-8 font-medium text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 truncate cursor-pointer shadow-sm"
+              >
+                <option value="">-- Walk-in / Guest Customer --</option>
+                {customers.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name} ({c.phone})
+                  </option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-2.5 flex items-center text-slate-500 dark:text-slate-400">
+                <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
           </div>
 
           <button
